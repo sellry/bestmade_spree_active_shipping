@@ -5,6 +5,11 @@ Active Shipping
 
 This is a Spree extension that wraps the popular [active_shipping](http://github.com/Shopify/active_shipping/tree/master) plugin.
 
+Gin Lane Fork Details
+---------------------
+
+* Add preferences to calculators for fee and multiplier at the calculator level.
+
 Installation
 ------------
 
