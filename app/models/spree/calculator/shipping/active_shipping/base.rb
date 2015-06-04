@@ -9,7 +9,10 @@ module Spree
   module Calculator::Shipping
     module ActiveShipping
       class Base < ShippingCalculator
+        # rate is multiplied by this amount
         preference :rate_multiplier, :decimal, default: 1
+
+        # fee (in dollars) to add to rate
         preference :handling_fee, :decimal, default: 0
 
         include ActiveMerchant::Shipping
@@ -43,9 +46,14 @@ module Spree
           rate = rates_result[self.class.description]
 
           return nil unless rate
-          rate = preferred_rate_multiplier * rate.to_f + (Spree::ActiveShipping::Config[:handling_fee].to_f || 0.0) + preferred_handling_fee
+          rate = preferred_rate_multiplier.to_f * rate.to_f + (Spree::ActiveShipping::Config[:handling_fee].to_f || 0.0)
 
           # divide by 100 since active_shipping rates are expressed as cents
+          rate = rate/100.0
+
+          # add handling fee
+          rate = rate + preferred_handling_fee.to_f
+
           return rate/100.0
         end
 
