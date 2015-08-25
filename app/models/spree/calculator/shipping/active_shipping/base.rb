@@ -54,7 +54,7 @@ module Spree
           # add handling fee
           rate = rate + preferred_handling_fee.to_f
 
-          return rate/100.0
+          return rate
         end
 
         def timing(line_items)
